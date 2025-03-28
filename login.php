@@ -4,11 +4,13 @@ require 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
+    $password = $_POST['password'];
 
-    if ($user && password_verify($_POST['password'], $user['password'])) {
+    $query = "SELECT * FROM users WHERE username = '$username'";
+    $result = mysqli_query($conn, $query);
+    $user = mysqli_fetch_assoc($result);
+
+    if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         header('Location: profile.php');
         exit;
@@ -35,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
-        <p>Don't have an account? <a href="register.php">Register</a></p>
+        <p>Don't have an account? <a href="register.php">Sign up</a></p>
     </div>
 </body>
 </html>

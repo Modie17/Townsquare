@@ -1,4 +1,12 @@
 <?php
-$pdo = new PDO('mysql:host=localhost;dbname=mini_twitter', 'root', '');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "townsquare";  // Updated database name
+
+$conn = mysqli_connect($host, $user, $pass, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 ?>
